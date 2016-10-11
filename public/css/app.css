@@ -5770,4 +5770,38 @@ button.close {
   .container {
     max-width: 800px; } }
 
+.input-group {
+  margin-bottom: 20px; }
+
+.edit_avatar {
+  float: left;
+  margin: 0 10px 10px 0; }
+
+.image-preview-input {
+  position: relative;
+  overflow: hidden;
+  margin: 0px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc; }
+
+.image-preview-input input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0); }
+
+.image-preview-input-title {
+  margin-left: 2px; }
+
+.btn-txt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
 /*# sourceMappingURL=app.css.map */

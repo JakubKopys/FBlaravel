@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Http\Request;
+use Image;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -60,11 +63,23 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
+
+
     protected function create(array $data)
     {
+        $request = app('request');
+        $filename = null;
+        Log::info('Request: '.$request);
+
+        if($request->hasfile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename) );
+        }
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'avatar' => $filename,
             'password' => bcrypt($data['password']),
         ]);
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use File;
+use Image;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -35,9 +37,24 @@ class UsersController extends Controller
            'password' => 'min:4|max:255'
         ]);
 
+        $filename = $user->avatar;
+        if($request->hasfile('avatar')){
+
+            // before uploading new image check if user already have one and delete it if he does.
+            if ($user->avatar != null) {
+                $old_image = $user->avatar;
+                File::delete($old_image);
+            }
+
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename) );
+        }
+
         $user->update([
             'name' => $request['name'],
             'email' => $request['email'],
+            'avatar' => $filename,
             'password' => bcrypt($request['password'])
         ]);
 
