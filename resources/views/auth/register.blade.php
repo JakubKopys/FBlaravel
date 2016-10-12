@@ -38,7 +38,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }} register">
+                        <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
                             <label for="avatar" class="col-md-4 control-label">Avatar</label>
 
                             <div class="col-md-6">
@@ -59,7 +59,7 @@
 
 
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} register">
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
@@ -75,7 +75,7 @@
 
 
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }} register">
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
                             <div class="col-md-6">

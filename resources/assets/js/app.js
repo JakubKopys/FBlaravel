@@ -33,11 +33,20 @@ $(document).on('click', '#close-preview', function(){
 });
 
 $(document).on('change', '.avatar_register input:file', function() {
-    var file = this.files[0];
+    var file = this.files[0];+
     $(".btn-txt").html(file.name);
 });
 
 $(function() {
+
+    $('.form-toggle').click(function () {
+        $('.post-form').slideToggle(300);
+        var link = $(this).find('a');
+        if (link.html() == 'Add Post')
+            link.html('Hide');
+        else
+            link.html('Add Post');
+    });
 
     // EDIT PAGE FILE INPUT JS  ------------------------------------
 
@@ -55,7 +64,7 @@ $(function() {
         html:true,
         title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
         content: "There's no image",
-        placement:'bottom'
+        placement:'right'
     });
     // Clear event
     $('.image-preview-clear').click(function(){
@@ -69,8 +78,7 @@ $(function() {
     $(".image-preview-input input:file").change(function (){
         var img = $('<img/>', {
             id: 'dynamic',
-            width:250,
-            height:200
+            width:250
         });
         var file = this.files[0];
         var reader = new FileReader();
@@ -84,7 +92,5 @@ $(function() {
         }
         reader.readAsDataURL(file);
     });
-
-
     // EDIT PAGE FILE INPUT JS THE END --------------------------------
 });

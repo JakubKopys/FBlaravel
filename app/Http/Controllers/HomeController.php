@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DebugBar\DebugBar;
 use Illuminate\Http\Request;
+use Post;
+use User;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = Post::with('user')->get();
+
+        return view('home', compact('posts'));
     }
 }

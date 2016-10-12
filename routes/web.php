@@ -24,3 +24,5 @@ Route::get('/users', 'UsersController@index');
 Route::get('/users/{user}', 'UsersController@show');
 Route::get('/users/{user}/edit', 'UsersController@edit');
 Route::patch('/users/{user}', 'UsersController@update');
+Route::get('/posts/{post}', 'PostsController@show');
+Route::post('/users/{user}/posts', 'PostsController@create');
