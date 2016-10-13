@@ -33,9 +33,12 @@
 
     <div class="form-toggle"><a href="#">Add Post</a></div>
 
-    <a href="{{URL::action('PostsController@testfunction')}}" method="POST">CLICK</a>
     <div class="posts">
-        @each('posts/post', $posts, 'post')
+        <ul id="posts">
+            @each('posts/post', $posts, 'post')
+        </ul>
+        {!! $posts->links() !!}
     </div>
+
 
 @endsection

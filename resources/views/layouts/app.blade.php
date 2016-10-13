@@ -24,12 +24,14 @@
     <div id="app">
         @include('layouts.nav')
 
-        <div class="container">
+        <div class="container" id="content">
             @yield('content')
         </div>
     </div>
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="/js/jquery.infinitescroll.min.js"></script>
+    <script src="/js/scroll.js"></script>
 </body>
 </html>

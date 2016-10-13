@@ -8,7 +8,9 @@ use User;
 use Post;
 use Auth;
 use Input;
+use Validator;
 use App\Http\Requests;
+use Illuminate\Support\Facades\View;
 
 class PostsController extends Controller
 {
@@ -44,34 +46,31 @@ class PostsController extends Controller
         return view('posts/edit', compact('post'));
     }
 
-    public function testfunction(Request $request)
-    {
-        if ($request->isMethod('post')){
-            return response()->json(['response' => 'This is post method']);
-        }
-
-        return response()->json(['response' => 'This is a get method']);
-    }
-
     public function ajaxcreate(Request $request)
     {
-        $this->validate($request, [
-            'content' => 'required|min:4|max:500'
+        $validator = Validator::make($request->all(), [
+            'content' => 'required|min:4|max:500',
         ]);
-        $filename = null;
-        if ($request->hasFile('image')) {
 
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->save(public_path('/uploads/images/' . $filename));
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        } else {
+            $filename = null;
+            if ($request->hasFile('image')) {
+
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                Image::make($image)->save(public_path('/uploads/images/' . $filename));
+            }
+
+            $post = Auth::user()->posts()->create([
+                'content' => $request->input('content'),
+                'image' => $filename
+            ]);
+
+            // return HTML view of created post to append it.
+            return response()->json(View::make('posts/post', compact('post'))->render());
         }
-
-        $post = Auth::user()->posts()->create([
-            'content' => $request->input('content'),
-            'image' => $filename
-        ]);
-
-        return response()->json($post);
 
     }
 }

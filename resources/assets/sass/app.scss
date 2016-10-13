@@ -96,6 +96,10 @@
   .fb-testimonial-copy {
     padding: 15px 0px 0px 0px;
   }
+
+  .fb-content {
+    color: darken(#5e5e5e, 30%);
+  }
 }
 //////////////////////////////// FACEBOOK-LIKE POSTS END /////////////////////////////////////////
 
@@ -117,3 +121,11 @@
   display: none;
 }
 
+.pagination {
+  display: none;
+}
+ul#posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

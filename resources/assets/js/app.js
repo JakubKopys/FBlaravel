@@ -100,10 +100,6 @@ $(function() {
     });
     // EDIT PAGE FILE INPUT JS THE END --------------------------------
 
-    $.get('/test', function(data, status){
-        console.log(data['response']);
-    });
-
     // ajax post create request
     $('#post_form').on('submit', function(e) {
         e.preventDefault();
@@ -125,7 +121,24 @@ $(function() {
             processData: false,
             success: function( data ) {
                 console.log(data);
+                $(".posts").prepend(data);
+                clear_post_form();
+            },
+            error: function(data) {
+                //TODO: display error messages using flash or smth idk m8, idc - it is now problem of future me.
+                console.log(data);
+                clear_post_form();
             }
         });
     });
+
 });
+
+function clear_post_form() {
+    $('#content').val("");
+    $('.image-preview').attr("data-content","").popover('hide');
+    $('.image-preview-filename').val("");
+    $('.image-preview-clear').hide();
+    $('.image-preview-input input:file').val("");
+    $(".image-preview-input-title").text("Browse");
+}

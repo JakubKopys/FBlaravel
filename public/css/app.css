@@ -5847,6 +5847,9 @@ button.close {
 .facebook-panel .fb-testimonial-copy {
   padding: 15px 0px 0px 0px; }
 
+.facebook-panel .fb-content {
+  color: #121212; }
+
 .btn-txt {
   white-space: nowrap;
   overflow: hidden;
@@ -5860,5 +5863,13 @@ button.close {
 
 .post-form {
   display: none; }
+
+.pagination {
+  display: none; }
+
+ul#posts {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
 
 /*# sourceMappingURL=app.css.map */
