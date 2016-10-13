@@ -5768,7 +5768,7 @@ button.close {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 800px; } }
+    max-width: 600px; } }
 
 .input-group {
   margin-bottom: 20px; }
@@ -5799,66 +5799,53 @@ button.close {
 .image-preview-input-title {
   margin-left: 2px; }
 
-.fb-testimonial-inner {
+.facebook-panel hr {
+  margin: 5px 0 -10px;
+  border: none;
+  height: 0.75px;
+  color: #333;
+  /* old IE */
+  background-color: gainsboro;
+  /* Modern Browsers */ }
+
+.facebook-panel .fb-testimonial-inner {
   background: #fff;
   padding: 10px;
   border-radius: 3px; }
 
-.facebook-thumb {
+.facebook-panel .facebook-thumb {
   width: 40px;
   display: inline-block;
-  vertical-align: top; }
+  vertical-align: top;
+  margin-right: 5px; }
 
-.facebook-name {
+.facebook-panel .facebook-image {
+  max-width: 100%;
+  max-height: 300px; }
+
+.facebook-panel .facebook-name {
   display: inline-block;
   margin: 0px;
   font-family: Helvetica, Arial, Sans-serif;
   font-weight: 700;
   color: #3b5998; }
 
-.facebook-date a {
+.facebook-panel .facebook-date a {
   color: #9197a3;
   font-size: 12px;
   font-weight: 500;
   text-decoration: underline; }
 
-.facebook-date {
+.facebook-panel .facebook-date {
   color: #9197a3;
   font-size: 12px;
   font-weight: 500; }
 
-.fa.fa-caret-right {
+.facebook-panel .fa.fa-caret-right {
   color: #9197a3; }
 
-.fb-testimonial-copy {
+.facebook-panel .fb-testimonial-copy {
   padding: 15px 0px 0px 0px; }
-
-.carousel .item {
-  -webkit-transition: opacity 3s;
-  transition: opacity 3s; }
-
-.carousel .active.left {
-  left: 0;
-  opacity: 0;
-  z-index: 2; }
-
-.carousel .next {
-  left: 0;
-  opacity: 1;
-  z-index: 1; }
-
-.carousel-indicators {
-  bottom: -25px; }
-
-.carousel-indicators li {
-  border-color: #333333;
-  width: 7px;
-  height: 7px; }
-
-.carousel-indicators .active {
-  background-color: #333333;
-  width: 9px;
-  height: 9px; }
 
 .btn-txt {
   white-space: nowrap;

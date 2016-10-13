@@ -39,6 +39,12 @@ $(document).on('change', '.avatar_register input:file', function() {
 
 $(function() {
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $('.form-toggle').click(function () {
         $('.post-form').slideToggle(300);
         var link = $(this).find('a');
@@ -93,4 +99,33 @@ $(function() {
         reader.readAsDataURL(file);
     });
     // EDIT PAGE FILE INPUT JS THE END --------------------------------
+
+    $.get('/test', function(data, status){
+        console.log(data['response']);
+    });
+
+    // ajax post create request
+    $('#post_form').on('submit', function(e) {
+        e.preventDefault();
+        var $content = $('#content').val();
+        var $image = $('#image').prop('files');
+
+        var $form_data = new FormData();
+        $form_data.append("content", $content);
+        if ($image.length > 0) {
+            var $file_data = $('#image').prop('files')[0]; // Getting the properties of file from file field
+            $form_data.append("image", $file_data);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '/posts',
+            data: $form_data,
+            contentType: false,
+            processData: false,
+            success: function( data ) {
+                console.log(data);
+            }
+        });
+    });
 });

@@ -19,10 +19,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+// User routes
 Route::get('/home', 'HomeController@index');
 Route::get('/users', 'UsersController@index');
 Route::get('/users/{user}', 'UsersController@show');
 Route::get('/users/{user}/edit', 'UsersController@edit');
 Route::patch('/users/{user}', 'UsersController@update');
+
+// Post routes
 Route::get('/posts/{post}', 'PostsController@show');
 Route::post('/users/{user}/posts', 'PostsController@create');
+Route::get('/posts/{post}/edit', 'PostsController@edit');
+Route::patch('/users/{user}/posts', 'PostsController@update');
+Route::get('test', 'PostsController@testfunction');
+Route::post('test', 'PostsController@testfunction');
+Route::post('/posts', 'PostsController@ajaxcreate');
