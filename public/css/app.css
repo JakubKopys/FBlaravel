@@ -5770,6 +5770,25 @@ button.close {
   .container {
     max-width: 600px; } }
 
+.login-app {
+  background-image: url("/img/stars-small.jpg");
+  background-size: cover;
+  /* <------ */
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh; }
+
+.login-navbar {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75); }
+
+.panel.login {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75); }
+
+#app {
+  padding-top: 7rem; }
+
 .input-group {
   margin-bottom: 20px; }
 
@@ -5850,6 +5869,11 @@ button.close {
 .facebook-panel .fb-content {
   color: #121212; }
 
+.edit-post-form .facebook-image {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px !important; }
+
 .btn-txt {
   white-space: nowrap;
   overflow: hidden;
@@ -5871,5 +5895,47 @@ ul#posts {
   margin: 0;
   padding: 0;
   list-style: none; }
+
+#msg_container {
+  z-index: 1000; }
+
+.user_links a {
+  font-size: 1rem;
+  text-decoration: underline; }
+  .user_links a:active {
+    background: white !important;
+    border: none !important; }
+
+.user_links .edit-link:hover {
+  color: #65f0ff; }
+
+.user_links .delete-link {
+  margin-left: 5px;
+  color: #FF4040;
+  font-size: 1.1rem;
+  text-decoration: underline;
+  background: white !important;
+  border: none !important; }
+  .user_links .delete-link:hover {
+    color: #ff7373; }
+
+.comment-avatar {
+  width: 30px; }
+
+.comment {
+  margin: 10px 0; }
+  .comment .comment-body {
+    display: inline-block;
+    vertical-align: top;
+    width: 500px; }
+  .comment .timestamp {
+    font-size: 11px; }
+
+a.more_comments {
+  text-decoration: underline;
+  font-size: 1.2rem; }
+
+input.comment-content {
+  min-width: 450px; }
 
 /*# sourceMappingURL=app.css.map */

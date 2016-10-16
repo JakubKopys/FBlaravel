@@ -26,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->orderBy("created_at", "desc")->paginate(10);
+        //eager load posts user and posts comments(with theirs users)
+        $posts = Post::with('user','comments.user')->orderBy("created_at", "desc")->paginate(5);
 
         return view('home', compact('posts'));
     }

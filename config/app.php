@@ -164,6 +164,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -230,8 +232,10 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'User' => App\User::class,
         'Post' => App\Post::class,
+        'Comment' => App\Comment::class,
         'Image' => Intervention\Image\Facades\Image::class,
-
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

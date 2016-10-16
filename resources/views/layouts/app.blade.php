@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -22,13 +23,13 @@
 </head>
 <body>
     <div id="app">
-        @include('layouts.nav')
+        <div id="msg_container" class="alert alert-danger" style="display: none"></div>
+        @include('layouts/nav')
 
-        <div class="container" id="content">
+        <div class="container">
             @yield('content')
         </div>
     </div>
-
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script src="/js/jquery.infinitescroll.min.js"></script>

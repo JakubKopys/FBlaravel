@@ -9,6 +9,7 @@ use Post;
 use Auth;
 use Input;
 use Validator;
+use File;
 use App\Http\Requests;
 use Illuminate\Support\Facades\View;
 
@@ -18,42 +19,78 @@ class PostsController extends Controller
     {
         return view('posts/show', compact('post'));
     }
-
-    public function create(Request $request, User $user)
-    {
-        $this->validate($request, [
-            'content' => 'required|min:4|max:500'
-        ]);
-
-        $filename = null;
-        if ($request->hasfile('image')) {
-
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->save(public_path('/uploads/images/' . $filename));
-        }
-
-        $user->posts()->create([
-            'content' => $request['content'],
-            'image' => $filename
-        ]);
-
-        return back();
-    }
+// BASIC CREATE
+//    public function create(Request $request, User $user)
+//    {
+//        $this->validate($request, [
+//            'content' => 'required|min:4|max:500'
+//        ]);
+//
+//        $filename = null;
+//        if ($request->hasfile('image')) {
+//
+//            $image = $request->file('image');
+//            $filename = time() . '.' . $image->getClientOriginalExtension();
+//            Image::make($image)->save(public_path('/uploads/images/' . $filename));
+//        }
+//
+//        $user->posts()->create([
+//            'content' => $request['content'],
+//            'image' => $filename
+//        ]);
+//
+//        return back();
+//    }
 
     public function edit(Post $post)
     {
         return view('posts/edit', compact('post'));
     }
 
-    public function ajaxcreate(Request $request)
+    public function update(Request $request, Post $post)
+    {
+        $this->validate($request, [
+            'content' => 'required|min:4|max:500'
+        ]);
+
+
+        $filename = $post->image;
+        if($request->hasfile('image')){
+
+            // before uploading new image check if user already have one and delete it if he does.
+            if ($post->image != null) {
+                $old_image = $post->image;
+                File::delete($old_image);
+            }
+
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->save( public_path('/uploads/images/' . $filename) );
+        }
+
+        $post->update([
+            'content' => $request['content'],
+            'image' => $filename,
+        ]);
+
+        return back();
+
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return back();
+    }
+
+    public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'content' => 'required|min:4|max:500',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 422);
         } else {
             $filename = null;
             if ($request->hasFile('image')) {
@@ -72,5 +109,17 @@ class PostsController extends Controller
             return response()->json(View::make('posts/post', compact('post'))->render());
         }
 
+    }
+
+    // TODO: if there are more than 10 comments redirect to post show page.
+    public function more_comments(Post $post)
+    {
+        $view = null;
+        $comments = $post->comments()->take(10)->get();
+        foreach($comments as $comment) {
+            $view .= ((string)View::make('comments/comment', compact('comment'))->render());
+        }
+
+        return response()->json($view);
     }
 }

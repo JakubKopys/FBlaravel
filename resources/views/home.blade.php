@@ -32,13 +32,11 @@
     </div>
 
     <div class="form-toggle"><a href="#">Add Post</a></div>
-
     <div class="posts">
         <ul id="posts">
             @each('posts/post', $posts, 'post')
         </ul>
         {!! $posts->links() !!}
     </div>
-
 
 @endsection

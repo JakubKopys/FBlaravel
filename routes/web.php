@@ -29,9 +29,10 @@ Route::patch('/users/{user}', 'UsersController@update');
 
 // Post routes
 Route::get('/posts/{post}', 'PostsController@show');
-Route::post('/users/{user}/posts', 'PostsController@create');
 Route::get('/posts/{post}/edit', 'PostsController@edit');
-Route::patch('/users/{user}/posts', 'PostsController@update');
-Route::get('test', 'PostsController@testfunction');
-Route::post('test', 'PostsController@testfunction');
-Route::post('/posts', 'PostsController@ajaxcreate');
+Route::patch('/posts/{post}', 'PostsController@update');
+Route::post('/posts', 'PostsController@create');
+Route::delete('/posts/{post}', 'PostsController@destroy');
+Route::get('/posts/{post}/more_comments', 'PostsController@more_comments');
+
+Route::post('/posts/{post}/comments', 'CommentsController@create');
