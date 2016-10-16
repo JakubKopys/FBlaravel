@@ -114,12 +114,19 @@ class PostsController extends Controller
     // TODO: if there are more than 10 comments redirect to post show page.
     public function more_comments(Post $post)
     {
-        $view = null;
-        $comments = $post->comments()->take(10)->get();
-        foreach($comments as $comment) {
-            $view .= ((string)View::make('comments/comment', compact('comment'))->render());
-        }
 
-        return response()->json($view);
+        $post_comments = $post->comments();
+        if ($post_comments->count()< 12) {
+            // HTML string accumulator
+            $view = null;
+
+            $comments = $post->comments;
+            foreach ($comments as $comment) {
+                $view .= ((string)View::make('comments/comment', compact('comment'))->render());
+            }
+            return response()->json(['view' => $view]);
+        } else {
+            return response()->json(['redirect' => "/posts/$post->id"]);
+        }
     }
 }

@@ -4,7 +4,7 @@
     <div class="fb-testimonial-inner">
         <div class="fb-profile">
             <img class="facebook-thumb" src="/uploads/avatars/{{ $post->user->avatar }}">
-            <p class="facebook-name">{{$post->user->name}}<br><span class="facebook-date"><a href="">{{$post->created_at->diffForHumans()}}</a> · <i class="fa fa-globe"></i></span></p>
+            <p class="facebook-name">{{$post->user->name}}<br><span class="facebook-date">{{link_to("posts/$post->id", $post->created_at->diffForHumans())}} · <i class="fa fa-globe"></i></span></p>
         </div>
         <div class="fb-testimonial-copy fb-content">
             <p>{{$post->content}}</p>
@@ -21,8 +21,8 @@
             {{ Form::close() }}
             <a class="pull-right btn btn-primary btn-link edit-link" href="{{URL::action('PostsController@edit', [$post->id])}}">Edit</a>
         </div>
-        {{ link_to("posts/$post->id/more_comments/", "more comments({$post->comments()->count()})", ['class' => 'more_comments', 'data-post-id'=>$post->id])}}
         @endif
+        {{ link_to("posts/$post->id/more_comments/", "more comments({$post->comments()->count()})", ['class' => 'more_comments', 'data-post-id'=>$post->id])}}
         <div class="comments" data-comments-post-id="{{$post->id}}">
             <div class="post-comments">
                 @each('comments/comment', $post->comments()->orderBy('created_at','desc')->take(2)->get(), 'comment')

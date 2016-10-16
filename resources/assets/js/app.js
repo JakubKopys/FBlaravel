@@ -179,8 +179,12 @@ $(function() {
             success: function(data) {
                 console.log("success more comments");
                 console.log(data);
-                $("[data-comments-post-id="+$post_id+"]").find('.post-comments').html(data);
-                $("a.more_comments[data-post-id="+$post_id+"]").remove();
+                if (data['view']) {
+                    $("[data-comments-post-id=" + $post_id + "]").find('.post-comments').html(data['view']);
+                    $("a.more_comments[data-post-id=" + $post_id + "]").remove();
+                } else if (data['redirect']) {
+                    window.location.href = data['redirect'];
+                }
             },
             error: function (data) {
                 console.log("error more comments");
