@@ -5928,8 +5928,12 @@ ul#posts {
     display: inline-block;
     vertical-align: top;
     width: 500px; }
+    .comment .comment-body .comment-content {
+      display: inline-block; }
   .comment .timestamp {
     font-size: 11px; }
+  .comment .comment_likes {
+    margin-top: -5px; }
 
 a.more_comments {
   text-decoration: underline;
@@ -5937,5 +5941,8 @@ a.more_comments {
 
 input.comment-content {
   min-width: 450px; }
+
+button.like-link {
+  font-size: 1.3rem; }
 
 /*# sourceMappingURL=app.css.map */

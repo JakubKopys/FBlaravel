@@ -13,6 +13,7 @@ class AddCommentsTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->integer('post_id')->unsigned()->index();
             $table->text('content');
+            $table->integer('likes_count')->default(0);
             $table->timestamps();
         });
     }

@@ -230,12 +230,15 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'User' => App\User::class,
-        'Post' => App\Post::class,
-        'Comment' => App\Comment::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        // My model aliases
+        'User' => App\User::class,
+        'Post' => App\Post::class,
+        'Comment' => App\Comment::class,
+        'Like' => App\Like::class,
 
     ],
 

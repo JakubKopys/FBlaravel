@@ -18,6 +18,11 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('foobar'),
             'admin' => true
         ]);
+        factory(App\User::class)->create([
+            'name' => 'Dawid',
+            'email' => 'example2@email.com',
+            'password' => bcrypt('foobar')
+        ]);
         $posts = array();
         $users = factory(App\User::class, 10)->create();
         foreach($users as $user) {

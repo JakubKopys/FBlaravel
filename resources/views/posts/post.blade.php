@@ -23,6 +23,23 @@
         </div>
         @endif
         {{ link_to("posts/$post->id/more_comments/", "more comments({$post->comments()->count()})", ['class' => 'more_comments', 'data-post-id'=>$post->id])}}
+        <div class="post_likes pull-right">
+            @if (!Auth::user()->already_likes_post($post))
+                {{ Form::open([ 'method'  => 'post', 'action' => [ 'PostLikeController@create', $post->id ] ]) }}
+                    {{--{{ Form::submit("Like ($post->likes_count)", array('class' => 'like-link btn-link ')) }}--}}
+                    <button type="submit" class="like-link btn-link">
+                        Like <span class="glyphicon glyphicon-thumbs-up"></span> ({{$post->likes_count}})
+                    </button>
+                {{ Form::close() }}
+            @else
+                {{ Form::open([ 'method'  => 'delete', 'action' => [ 'PostLikeController@destroy', $post->id ]]) }}
+                    {{--{{ Form::submit("Unlike ($post->likes_count)", array('class' => 'unlike-link btn-link')) }}--}}
+                    <button type="submit" class="like-link btn-link">
+                        Unlike <span class="glyphicon glyphicon-thumbs-down"></span> ({{$post->likes_count}})
+                    </button>
+                {{ Form::close() }}
+            @endif
+        </div>
         <div class="comments" data-comments-post-id="{{$post->id}}">
             <div class="post-comments">
                 @each('comments/comment', $post->comments()->orderBy('created_at','desc')->take(2)->get(), 'comment')

@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Like;
+use Log;
+use Debugbar;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +30,11 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Like::saved(function (Like $like) {
+            $like->likeable->increment('likes_count');
+        });
+        Like::deleted(function (Like $like) {
+            $like->likeable->decrement('likes_count');
+        });
     }
 }

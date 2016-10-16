@@ -4,21 +4,16 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePosts extends Migration
+class AddLikesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
-        Schema::create('posts', function(Blueprint $table) {
+        Schema::create('likes', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->text('content');
-            $table->string('image')->nullable();
-            $table->integer('likes_count')->default(0);
+            $table->integer('likeable_id')->unsigned()->index();
+            $table->string('likeable_type')->unsigned();
             $table->timestamps();
         });
     }
@@ -30,6 +25,6 @@ class CreatePosts extends Migration
      */
     public function down()
     {
-        Schema::drop('posts');
+        Schema::drop('likes');
     }
 }
