@@ -139,38 +139,6 @@ $(function() {
         });
     });
 
-    // ajax comment submit
-    $('.comment-form').on('submit', function(e) {
-        e.preventDefault();
-        var $form = $(this);
-        var $comment_input = $form.find('input.comment-content');
-        var token = $form.find('input#token').val();
-        var $content = $comment_input.val();
-        var $post_id = $form.data('post-id');
-        var $form_data = new FormData();
-        $form_data.append('_token', token);
-        $form_data.append('content', $content);
-
-        $.ajax({
-            type: "POST",
-            url: "/posts/"+$post_id+"/comments",
-            data: $form_data,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                console.log("comment creation was succesful");
-                $("[data-comments-post-id="+$post_id+"]").find('.post-comments').prepend(data['view']);
-                $comment_input.val('');
-                $("a.more_comments[data-post-id="+$post_id+"]").html('more comments('+data['count']+')');
-            },
-            error: function (data) {
-                console.log('comment creation failed');
-                console.log(data);
-                showCommentFlash(data.responseJSON.content, $comment_input);
-            }
-        });
-    });
-
     //more comments to append remaining comments or redirect to post show page of there are more than 12 comments.
     $('a.more_comments').on('click', function(e) {
         e.preventDefault();
@@ -183,12 +151,12 @@ $(function() {
                 console.log(data);
                 if (data['view']) {
                     var $post_comments = $("[data-comments-post-id=" + $post_id + "]").find('.post-comments');
-                    $post_comments.slideUp(200, function() {
+                    $post_comments.slideUp(300, function() {
                         $(this).html(data['view']);
+                        $('.comments[data-comments-post-id='+$post_id+']').addClass('more-comments');
+                        $("a.more_comments[data-post-id=" + $post_id + "]").remove();
+                        $(this).slideDown(400);
                     });
-                    $("a.more_comments[data-post-id=" + $post_id + "]").remove();
-                    $('.comments[data-comments-post-id='+$post_id+']').addClass('more-comments');
-                    $post_comments.slideDown(300);
                 } else if (data['redirect']) {
                     window.location.href = data['redirect'];
                 }
@@ -201,6 +169,41 @@ $(function() {
 
 });
 
+
+// ajax comment submit
+$(document).delegate('.comment-form', 'submit', function(e) {
+    e.preventDefault();
+    var $form = $(this);
+    var $comment_input = $form.find('input.comment-content');
+    var token = $form.find('input#token').val();
+    var $content = $comment_input.val();
+    var $post_id = $form.data('post-id');
+    var $form_data = new FormData();
+    $form_data.append('_token', token);
+    $form_data.append('content', $content);
+
+    $.ajax({
+        type: "POST",
+        url: "/posts/"+$post_id+"/comments",
+        data: $form_data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log("comment creation was succesful");
+            $("[data-comments-post-id="+$post_id+"]").find('.post-comments').prepend(data['view']);
+            $comment_input.val('');
+            $("a.more_comments[data-post-id="+$post_id+"]").html('more comments('+data['count']+')');
+        },
+        error: function (data) {
+            console.log('comment creation failed');
+            console.log(data);
+            showCommentFlash(data.responseJSON.content, $comment_input);
+        }
+    });
+});
+
+
+// ajax like
 $(document).delegate('.like-form', 'submit', function(e) {
     e.preventDefault();
     var $form = $(this);
@@ -229,6 +232,8 @@ $(document).delegate('.like-form', 'submit', function(e) {
     });
 });
 
+
+//ajax unlike
 $(document).delegate('.unlike-form', 'submit', function(e) {
     e.preventDefault();
     var $form = $(this);

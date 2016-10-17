@@ -5942,11 +5942,13 @@ a.more_comments {
   text-decoration: underline;
   font-size: 1.2rem; }
 
-input.comment-content {
-  min-width: 500px;
-  margin-left: 5px;
-  border-radius: 0;
-  height: 30px; }
+.add-comment {
+  margin-top: 5px; }
+  .add-comment input.comment-content {
+    min-width: 500px;
+    margin-left: 5px;
+    border-radius: 0;
+    height: 30px; }
 
 button.like-link {
   font-size: 1.3rem; }

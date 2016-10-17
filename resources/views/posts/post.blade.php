@@ -38,7 +38,7 @@
                 {{ Form::open(['url' => "/posts/$post->id/comments", 'class'=>'comment-form', 'data-post-id'=>$post->id, 'data-behavior'=>'comment-form']) }}
                 <input type="hidden" id="token" value="{{ csrf_token() }}">
                 <img src="/uploads/avatars/{{Auth::user()->avatar}}" class="comment-avatar">
-                <div class="form-group new-comment-content">
+                <div class="form-group">
                     {{Form::text('content', null, ['class' => 'comment-content form-control'])}}
                 </div>
                 {{ Form::close() }}
