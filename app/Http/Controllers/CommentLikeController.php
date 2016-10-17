@@ -11,11 +11,12 @@ use Auth;
 use Input;
 use Validator;
 use Log;
+use Illuminate\Support\Facades\View;
 use App\Http\Requests;
 
 class CommentLikeController extends Controller
 {
-    public function create(Request $request, Comment $comment)
+    public function create(Comment $comment)
     {
         if( !Auth::user()->already_likes_comment($comment)) {
             $like = new Like;
@@ -23,16 +24,13 @@ class CommentLikeController extends Controller
             $like->likeable_type = 'App\Comment';
             $like->user_id = Auth::user()->id;
 
-            //Auth::user()->likes()->save($like);
-            //$comment->increment('likes_count');
-            // can also do: $comment->likes()->save($like);
-
             $like->save();
         }
-        return back();
+
+        return response()->json(['view'=>View::make('likes/unlike', ['model'=>$comment])->render(),'count'=>$comment->likes_count]);
     }
 
-    public function destroy(Request $request, Comment $comment)
+    public function destroy(Comment $comment)
     {
         Like::where([
             ['likeable_id','=',$comment->id],
@@ -40,6 +38,6 @@ class CommentLikeController extends Controller
             ['user_id','=',Auth::user()->id]
         ])->first()->delete();
 
-        return back();
+        return response()->json(['view'=>View::make('likes/like', ['model'=>$comment])->render(),'count'=>$comment->likes_count]);
     }
 }

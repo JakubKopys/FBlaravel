@@ -40,6 +40,6 @@ Route::post('/posts/{post}/comments', 'CommentsController@create');
 
 //Likes routes
 Route::post('/posts/{post}/likes', 'PostLikeController@create');
-Route::delete('/posts/{post}', 'PostLikeController@destroy');
+Route::delete('/posts/{post}/likes', 'PostLikeController@destroy');
 Route::post('/comments/{comment}/likes', 'CommentLikeController@create');
-Route::delete('/comments/{comment}', 'CommentLikeController@destroy');
+Route::delete('/comments/{comment}/likes', 'CommentLikeController@destroy');

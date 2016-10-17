@@ -23,21 +23,11 @@
         </div>
         @endif
         {{ link_to("posts/$post->id/more_comments/", "more comments({$post->comments()->count()})", ['class' => 'more_comments', 'data-post-id'=>$post->id])}}
-        <div class="post_likes pull-right">
+        <div class="post_likes pull-right" data-post-id="{{$post->id}}">
             @if (!Auth::user()->already_likes_post($post))
-                {{ Form::open([ 'method'  => 'post', 'action' => [ 'PostLikeController@create', $post->id ] ]) }}
-                    {{--{{ Form::submit("Like ($post->likes_count)", array('class' => 'like-link btn-link ')) }}--}}
-                    <button type="submit" class="like-link btn-link">
-                        Like <span class="glyphicon glyphicon-thumbs-up"></span> ({{$post->likes_count}})
-                    </button>
-                {{ Form::close() }}
+                @include('likes/like', ['model' => $post])
             @else
-                {{ Form::open([ 'method'  => 'delete', 'action' => [ 'PostLikeController@destroy', $post->id ]]) }}
-                    {{--{{ Form::submit("Unlike ($post->likes_count)", array('class' => 'unlike-link btn-link')) }}--}}
-                    <button type="submit" class="like-link btn-link">
-                        Unlike <span class="glyphicon glyphicon-thumbs-down"></span> ({{$post->likes_count}})
-                    </button>
-                {{ Form::close() }}
+                @include('likes/unlike', ['model' => $post])
             @endif
         </div>
         <div class="comments" data-comments-post-id="{{$post->id}}">
@@ -48,7 +38,7 @@
                 {{ Form::open(['url' => "/posts/$post->id/comments", 'class'=>'comment-form', 'data-post-id'=>$post->id, 'data-behavior'=>'comment-form']) }}
                 <input type="hidden" id="token" value="{{ csrf_token() }}">
                 <img src="/uploads/avatars/{{Auth::user()->avatar}}" class="comment-avatar">
-                <div class="form-group">
+                <div class="form-group new-comment-content">
                     {{Form::text('content', null, ['class' => 'comment-content form-control'])}}
                 </div>
                 {{ Form::close() }}

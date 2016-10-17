@@ -40,10 +40,10 @@ $(document).on('change', '.avatar_register input:file', function() {
 $(function() {
 
     // Change looks if user is not logged in.
-    if (window.location.pathname == "/" || window.location.pathname == "/login" || window.location.pathname == '/register') {
-        $('.navbar').addClass('login-navbar');
-        $('#app').addClass('login-app');
-    }
+    // if (window.location.pathname == "/" || window.location.pathname == "/login" || window.location.pathname == '/register') {
+    //     $('.navbar').addClass('login-navbar');
+    //     $('#app').addClass('login-app');
+    // }
 
     //alert('height: ' + $(window).height() + 'width: ' + $(window).width());   // returns height and width of browser viewport
 
@@ -170,6 +170,8 @@ $(function() {
             }
         });
     });
+
+    //more comments to append remaining comments or redirect to post show page of there are more than 12 comments.
     $('a.more_comments').on('click', function(e) {
         e.preventDefault();
         var $post_id = $(this).data('post-id');
@@ -180,8 +182,13 @@ $(function() {
                 console.log("success more comments");
                 console.log(data);
                 if (data['view']) {
-                    $("[data-comments-post-id=" + $post_id + "]").find('.post-comments').html(data['view']);
+                    var $post_comments = $("[data-comments-post-id=" + $post_id + "]").find('.post-comments');
+                    $post_comments.slideUp(200, function() {
+                        $(this).html(data['view']);
+                    });
                     $("a.more_comments[data-post-id=" + $post_id + "]").remove();
+                    $('.comments[data-comments-post-id='+$post_id+']').addClass('more-comments');
+                    $post_comments.slideDown(300);
                 } else if (data['redirect']) {
                     window.location.href = data['redirect'];
                 }
@@ -189,9 +196,64 @@ $(function() {
             error: function (data) {
                 console.log("error more comments");
             }
-        })
-    })
+        });
+    });
 
+});
+
+$(document).delegate('.like-form', 'submit', function(e) {
+    e.preventDefault();
+    var $form = $(this);
+    var $model = $(this).data('behavior');
+    var $model_id = $form.data($model+'-id');
+    console.log("/"+$model+"s/"+$model_id+"/likes");
+    //TODO: zmień url posts na model + 's' ...
+    $.ajax({
+        type: "POST",
+        url: "/"+$model+"s/"+$model_id+"/likes",
+        dataType: 'JSON',
+        success: function (data) {
+            console.log("Ajax like success");
+            console.log(data['view']);
+            $('.'+$model+'_likes[data-'+$model+'-id='+$model_id+']').html(data['view']);
+
+            // TODO: figure out why generated view has wrong likes count
+            // for now I will manually increase the counter
+            var new_count = parseInt(data['count']) + 1;
+            $('.like-link[data-'+$model+'-id='+$model_id+']').html("Unlike <span class='glyphicon glyphicon-thumbs-down'></span> ("+new_count+")");
+        },
+        error: function (data) {
+            console.log("Ajax like error");
+            console.log(data);
+        }
+    });
+});
+
+$(document).delegate('.unlike-form', 'submit', function(e) {
+    e.preventDefault();
+    var $form = $(this);
+    var $model = $(this).data('behavior');
+    var $model_id = $form.data($model+'-id');
+
+    $.ajax({
+        type: "DELETE",
+        url: "/"+$model+"s/"+$model_id+"/likes",
+        dataType: 'JSON',
+        success: function (data) {
+            console.log("Ajax like success");
+            console.log(data['view']);
+            $('.'+$model+'_likes[data-'+$model+'-id='+$model_id+']').html(data['view']);
+
+            // TODO: figure out why generated view has wrong likes count
+            // for now I will manually decrease the counter
+            var new_count = parseInt(data['count']) - 1;
+            $('.like-link[data-'+$model+'-id='+$model_id+']').html("Like <span class='glyphicon glyphicon-thumbs-up'></span> ("+new_count+")");
+        },
+        error: function (data) {
+            console.log("Ajax like error");
+            console.log(data);
+        }
+    });
 });
 
 function showCommentFlash(message, item) {

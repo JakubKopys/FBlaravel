@@ -16,7 +16,7 @@ use App\Http\Requests;
 
 class PostLikeController extends Controller
 {
-    public function create(Request $request, Post $post)
+    public function create(Post $post)
     {
         if( !Auth::user()->already_likes_post($post)) {
             $like = new Like;
@@ -24,16 +24,13 @@ class PostLikeController extends Controller
             $like->likeable_type = 'App\Post';
             $like->user_id = Auth::user()->id;
 
-            //Auth::user()->likes()->save($like);
-            //$comment->increment('likes_count');
-            // can also do: $comment->likes()->save($like);
-
             $like->save();
         }
-        return back();
+
+        return response()->json(['view'=>View::make('likes/unlike', ['model'=>$post])->render(),'count'=>$post->likes_count]);
     }
 
-    public function destroy(Request $request, Post $post)
+    public function destroy(Post $post)
     {
         Like::where([
             ['likeable_id','=',$post->id],
@@ -41,6 +38,6 @@ class PostLikeController extends Controller
             ['user_id','=',Auth::user()->id]
         ])->first()->delete();
 
-        return back();
+        return response()->json(['view'=>View::make('likes/like', ['model'=>$post])->render(),'count'=>$post->likes_count]);
     }
 }

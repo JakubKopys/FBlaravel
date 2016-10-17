@@ -19,29 +19,6 @@ class PostsController extends Controller
     {
         return view('posts/show', compact('post'));
     }
-// BASIC CREATE
-//    public function create(Request $request, User $user)
-//    {
-//        $this->validate($request, [
-//            'content' => 'required|min:4|max:500'
-//        ]);
-//
-//        $filename = null;
-//        if ($request->hasfile('image')) {
-//
-//            $image = $request->file('image');
-//            $filename = time() . '.' . $image->getClientOriginalExtension();
-//            Image::make($image)->save(public_path('/uploads/images/' . $filename));
-//        }
-//
-//        $user->posts()->create([
-//            'content' => $request['content'],
-//            'image' => $filename
-//        ]);
-//
-//        return back();
-//    }
-
     public function edit(Post $post)
     {
         return view('posts/edit', compact('post'));
