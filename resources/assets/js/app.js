@@ -38,6 +38,13 @@ $(document).on('change', '.avatar_register input:file', function() {
 });
 
 $(function() {
+    $( "#q" ).autocomplete({
+        source: "search/autocomplete",
+        minLength: 3,
+        select: function(event, ui) {
+            $('#q').val(ui.item.value);
+        }
+    });
 
     // Change looks if user is not logged in.
     // if (window.location.pathname == "/" || window.location.pathname == "/login" || window.location.pathname == '/register') {

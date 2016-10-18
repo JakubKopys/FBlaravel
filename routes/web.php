@@ -48,3 +48,6 @@ Route::delete('/comments/{comment}/likes', 'CommentLikeController@destroy');
 Route::post('/users/{friend}/friendships', 'FriendshipsController@create');
 Route::patch('/users/{friend}/friendships', 'FriendshipsController@update');
 Route::delete('/users/{friend}/friendships', 'FriendshipsController@destroy');
+
+Route::get('search/autocomplete', 'SearchController@autocomplete');
+Route::get('search', 'SearchController@searchUser');

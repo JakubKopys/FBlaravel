@@ -3,6 +3,16 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">HotOrNot</a>
         </div>
+        <ul class="nav navbar-nav">
+            @if(!Auth::guest())
+                <li class="search">
+                    {{ Form::open(['action' => ['SearchController@searchUser'], 'method' => 'get', 'class' => 'form-inline']) }}
+                    {{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Enter name', 'class'=>'form-control'])}}
+                    {{--{{ Form::submit('Search', array('class' => 'button expand')) }}--}}
+                    {{ Form::close() }}
+                </li>
+            @endif
+        </ul>
         <ul class="nav navbar-nav navbar-right">
             @if(Auth::guest())
                 <li><a href="/login">Login</a></li>
