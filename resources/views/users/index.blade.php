@@ -19,8 +19,26 @@
                         <td>
                             @if (Auth::user()->is_friends_with($user))
                                 Friends
+                                {{ Form::open([ 'method'  => 'delete', 'action' => [ 'FriendshipsController@destroy', $user->id ]]) }}
+                                <button type="submit" class="btn-link">
+                                    Remove friend
+                                </button>
+                                {{ Form::close() }}
+                            @elseif (Auth::user()->does_have_request_from($user))
+                                {{ Form::open([ 'method'  => 'patch', 'action' => [ 'FriendshipsController@update', $user->id ]]) }}
+                                <button type="submit" class="btn-link">
+                                    Accept
+                                </button>
+                                {{ Form::close() }}
+                            @elseif (Auth::user()->did_send_request_to($user))
+                                Pending
                             @else
                                 Not friends
+                                {{ Form::open([ 'method'  => 'post', 'action' => [ 'FriendshipsController@create', $user->id ]]) }}
+                                <button type="submit" class="btn-link">
+                                    Add friend
+                                </button>
+                                {{ Form::close() }}
                             @endif
                         </td>
                         <td>{{$user->id}}</td>

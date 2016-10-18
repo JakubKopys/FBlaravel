@@ -40,7 +40,10 @@ class User extends Authenticatable
 
     public function accepted_friendships() {
         return $this->friendships()->where([['status','=','accepted'],['user_id','=', $this->id]])
-                                   ->orWhere([['status','=','accepted'],['friend_id','=', $this->id]]);
+                                   ->orWhere([['status','=','accepted'],['friend_id','=', $this->id]])
+                                   ->get()->reject(function($friendship) {
+                                       return $friendship->friend_id == $this->id;
+                                   });
     }
 
     public function pending_friendships() {
@@ -55,7 +58,7 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->hasManyThrough('App\User', 'App\Friendship', 'friend_id', 'id', 'id');
+        // return $this->hasManyThrough('App\User', 'App\Friendship', 'friend_id', 'id', 'id')
         // It will work only If every new friendships results in two friendsips:
         // Friendship #1:
         // user_id: user_id
@@ -63,11 +66,24 @@ class User extends Authenticatable
         // Friendship #2;
         // user_id: friend_id
         // friend_id: user_id
+        $ids_array = $this->accepted_friendships()->pluck('friend_id')->toArray();
+        return User::whereIn('id', $ids_array)->get();
+    }
+
+    public function did_send_request_to(self $user)
+    {
+        return $this->pending_friendships->contains('friend_id', $user->id);
+    }
+
+    public function does_have_request_from(self $user)
+    {
+        return $this->requested_friendships->contains('friend_id', $user->id);
     }
 
     public function is_friends_with(self $user)
     {
-        return $this->friends()->where('user_id', $user->id)->exists();
+        $friends_ids = $this->accepted_friendships()->pluck('friend_id');
+        return User::whereIn('id', $friends_ids->toArray())->where('id', $user->id)->exists();
     }
 
     public function already_likes_comment(Comment $comment) {

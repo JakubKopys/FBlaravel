@@ -8,6 +8,7 @@ use App\User;
 use File;
 use Image;
 use App\Http\Requests;
+use Auth;
 use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
@@ -18,7 +19,7 @@ class UsersController extends Controller
     }
     public function index()
     {
-        $users = User::all();
+        $users = User::all()->except(Auth::id());;
         return view('users.index', ['users' => $users]);
     }
     public function show(User $user)

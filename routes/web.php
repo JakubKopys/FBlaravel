@@ -43,3 +43,8 @@ Route::post('/posts/{post}/likes', 'PostLikeController@create');
 Route::delete('/posts/{post}/likes', 'PostLikeController@destroy');
 Route::post('/comments/{comment}/likes', 'CommentLikeController@create');
 Route::delete('/comments/{comment}/likes', 'CommentLikeController@destroy');
+
+//Friendship routes
+Route::post('/users/{friend}/friendships', 'FriendshipsController@create');
+Route::patch('/users/{friend}/friendships', 'FriendshipsController@update');
+Route::delete('/users/{friend}/friendships', 'FriendshipsController@destroy');
