@@ -239,6 +239,7 @@ return [
         'Post' => App\Post::class,
         'Comment' => App\Comment::class,
         'Like' => App\Like::class,
+        'Friendship' => App\Friendship::class,
 
     ],
 
